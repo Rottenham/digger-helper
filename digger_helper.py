@@ -7,7 +7,7 @@ from colorama import init
 from cursor import hide
 
 __title__ = "矿工法辅助"
-__version__ = "1.3"
+__version__ = "1.4"
 __author__ = "Crescendo"
 __date__ = "22/05/27"
 output_text = ""
@@ -146,6 +146,7 @@ def get_digger_info():
     magnet = get_magnet()
     if magnet is None:  # 磁铁连续吸附时有1cs状态为1，尝试跳过
         sleep(0.02)
+        magnet = get_magnet()
     if magnet is None:
         return no_magenet()
     else:
@@ -175,18 +176,19 @@ def main():
         hide()
         if get_terminal_size()[0] < 35:
             output("命令行界面过窄，请调整窗口大小", clear=True)
+            sleep(0.01)
         elif not game_on():
             output("未找到游戏（支持的版本：英原、汉一、汉二）", clear=True)
             sleep(0.3)
         elif game_mode() != 70 or not game_ui() in [2, 3]:
-            output(f"已找到游戏，但未进入IZE", clear=True)
+            output("已找到游戏，但未进入IZE", clear=True)
             sleep(0.3)
         else:
             output(get_digger_info(), clear=False)
             if magnet is None:
                 sleep(0.3)
             else:
-                sleep(0.02)
+                sleep(0.01)
 
 
 if __name__ == "__main__":
